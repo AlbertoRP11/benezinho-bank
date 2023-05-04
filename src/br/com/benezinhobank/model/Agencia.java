@@ -42,6 +42,12 @@ public class Agencia {
         this.banco = banco;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Agencia{" +
+                "numero='" + numero + '\'' +
+                ", nome='" + nome + '\'' +
+                ", banco=" + banco +
+                '}';
+    }
 }

@@ -16,4 +16,11 @@ public class Banco {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    @Override
+    public String toString() {
+        return "Banco{" +
+                "nome='" + nome + '\'' +
+                '}';
+    }
 }
