@@ -2,9 +2,11 @@ import br.com.benezinhobank.model.Agencia;
 import br.com.benezinhobank.model.Banco;
 import br.com.benezinhobank.model.ContaCorrente;
 import br.com.benezinhobank.model.ContaPoupanca;
+import br.com.benezinhobank.pessoa.model.Pessoa;
 import br.com.benezinhobank.pessoa.model.PessoaFisica;
 import br.com.benezinhobank.pessoa.model.PessoaJuridica;
 
+import javax.swing.*;
 import java.time.LocalDate;
 
 public class Main {
@@ -24,7 +26,15 @@ public class Main {
 
         PessoaFisica alberto = new PessoaFisica();
         alberto.setCPF("456654456-30");
+        alberto.setNome("Alberto Rubinho Peruchi");
         alberto.setNascimento(LocalDate.of(2002,1,11));
+        alberto.setMae(mae);
+
+        PessoaFisica lucca = new PessoaFisica();
+        lucca.setCPF("123321123-90");
+        lucca.setNome("Lucca Freitas");
+        lucca.setNascimento(LocalDate.of(2004, 8, 19));
+        lucca.setMae(mae);
 
         ContaCorrente cc = new ContaCorrente();
         cc.setAgencia(osasco);
@@ -46,15 +56,50 @@ public class Main {
         holding.setNome("Alberto Holding");
         holding.setRazaoSocial("Alberto Holding SA");
 
+        Pessoa[] socios = new Pessoa[3];
+        socios[0] = alberto;
+        socios[1] = mae;
+        socios[2] = lucca;
+
+        holding.setSocios(socios);
+
         ContaCorrente ccH = new ContaCorrente();
         ccH.setNumero("3-7");
-        ccH.setLimite(800_000_000);
-        ccH.setSaldo(1_000_000_000);
+        ccH.setLimite(500);
+        ccH.setSaldo(1000);
         ccH.setTitular(holding);
         ccH.setAgencia(osasco);
 
-        System.out.println(cc);
-        System.out.println(cp);
-        System.out.println(ccH);
+        //System.out.println(cc);
+        //System.out.println(cp);
+        //System.out.println(ccH);
+
+        for (int i=0; i<socios.length; i++){
+            System.out.println(socios[i]);
+        }
+
+        int continua = 0;
+
+        do {
+            System.out.println("Saldo anterior: " + (ccH.getSaldo()));
+            System.out.println("Limite: " + ccH.getLimite());
+            System.out.println("Disponível: " + (ccH.getLimite() + ccH.getSaldo()));
+
+            double valor = Double.parseDouble(JOptionPane.showInputDialog("Insira o valor que deseja sacar:"));
+            boolean saquei = ccH.sacar(valor);
+
+            if(saquei) {
+                System.out.println("Saque efetuado com sucesso");
+            } else{
+                System.out.println("Erro no saque");
+            }
+            String texto = """
+                    Deseja relaizar um novo saque?
+                    [1] SIM
+                    [2] NÃO
+                    """;
+            continua = Integer.parseInt(JOptionPane.showInputDialog(texto));
+
+        }while(continua==1);
     }
 }

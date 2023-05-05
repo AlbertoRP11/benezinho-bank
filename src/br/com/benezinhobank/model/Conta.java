@@ -54,6 +54,16 @@ public abstract class Conta {
         this.numero = numero;
     }
 
+    public boolean sacar(double valor){
+        if(valor<0)
+            return false;
+        if(this.saldo<valor)
+            return false;
+
+        this.saldo = this.saldo - valor;
+        return true;
+    }
+
     @Override
     public String toString() {
         return "Conta{" +

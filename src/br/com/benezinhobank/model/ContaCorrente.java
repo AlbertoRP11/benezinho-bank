@@ -13,13 +13,25 @@ public class ContaCorrente extends Conta{
         super(numero, agencia, titular, saldo);
         this.limite = limite;
     }
-
     public double getLimite() {
         return limite;
     }
 
     public void setLimite(double limite) {
         this.limite = limite;
+    }
+    @Override
+    public boolean sacar(double valor){
+        double valordisponivel = getSaldo() + getLimite();
+
+        if(valor<=0)
+            return false;
+
+        if(super.getSaldo()<valor)
+            return false;
+
+        setSaldo(super.getSaldo() - valor);
+        return true;
     }
 
     @Override
